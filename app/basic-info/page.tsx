@@ -2,7 +2,18 @@
 
 import React, { useState, forwardRef, useImperativeHandle } from 'react';
 
-const Infor = forwardRef((props, ref) => {
+interface Props {
+    // Define props if needed
+}
+
+interface FormErrors {
+    fullName: string;
+    username: string;
+    phoneNumber: string;
+    email: string;
+}
+
+const Infor = forwardRef((props: Props, ref: React.Ref<any>) => {
     const logos = [
         { src: '/images/instagram.png', alt: 'Instagram' },
         { src: '/images/Tik Tok.png', alt: 'TikTok' },
@@ -16,7 +27,7 @@ const Infor = forwardRef((props, ref) => {
     const [email, setEmail] = useState('');
 
     // State for error messages
-    const [errors, setErrors] = useState({
+    const [errors, setErrors] = useState<FormErrors>({
         fullName: '',
         username: '',
         phoneNumber: '',
@@ -32,18 +43,17 @@ const Infor = forwardRef((props, ref) => {
         if (name === 'email') setEmail(value);
     };
 
-
     // Validate form fields
     const validate = () => {
         let isValid = true;
-        const newErrors = { fullName: '', username: '', phoneNumber: '', email: '' };
+        const newErrors: FormErrors = { fullName: '', username: '', phoneNumber: '', email: '' };
 
-        if (!fullName) {
+        if (!fullName.trim()) {
             newErrors.fullName = 'Full Name is required';
             isValid = false;
         }
 
-        if (!username) {
+        if (!username.trim()) {
             newErrors.username = 'Username is required';
             isValid = false;
         }
@@ -78,11 +88,14 @@ const Infor = forwardRef((props, ref) => {
                 {logos.map((logo, index) => (
                     <div
                         key={index}
-                        className="bg-gray-100 rounded-lg py-3 px-3 hover:cursor-pointer text-center flex  items-center w-full sm:w-1/3 md:w-1/4 lg:w-1/5"
-                    >
-                        <img src={logo.src} alt={logo.alt} className="h-auto  mx-auto" />
-                    </div>
-                ))}
+                      className="bg-gray-100 rounded-lg py-3 px-3 hover:cursor-pointer text-center flex items-center w-full sm:w-1/3 md:w-1/4 lg:w-1/5"
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`Connect with ${logo.alt}`}
+                  >
+                      <img src={logo.src} alt={logo.alt} className="h-auto mx-auto" />
+                  </div>
+              ))}
             </div>
 
             <div>
@@ -91,8 +104,11 @@ const Infor = forwardRef((props, ref) => {
 
             <form className="space-y-4">
                 <div>
+                    <label htmlFor="fullName" className="sr-only">
+                        Full Name
+                    </label>
                     <input
-                        placeholder='Full Name'
+                        placeholder="Full Name"
                         type="text"
                         id="fullName"
                         name="fullName"
@@ -104,8 +120,11 @@ const Infor = forwardRef((props, ref) => {
                 </div>
 
                 <div>
+                    <label htmlFor="username" className="sr-only">
+                        Username
+                    </label>
                     <input
-                        placeholder='Username'
+                        placeholder="Username"
                         type="text"
                         id="username"
                         name="username"
@@ -117,8 +136,11 @@ const Infor = forwardRef((props, ref) => {
                 </div>
 
                 <div>
+                    <label htmlFor="phoneNumber" className="sr-only">
+                        Phone Number
+                    </label>
                     <input
-                        placeholder='Phone Number'
+                        placeholder="Phone Number"
                         type="text"
                         id="phoneNumber"
                         name="phoneNumber"
@@ -130,8 +152,11 @@ const Infor = forwardRef((props, ref) => {
                 </div>
 
                 <div>
+                    <label htmlFor="email" className="sr-only">
+                        Email
+                    </label>
                     <input
-                        placeholder='Email'
+                        placeholder="Email"
                         type="email"
                         id="email"
                         name="email"
@@ -145,5 +170,7 @@ const Infor = forwardRef((props, ref) => {
         </div>
     );
 });
+
+Infor.displayName = 'Infor';
 
 export default Infor;
