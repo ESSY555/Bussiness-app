@@ -1,3 +1,5 @@
+'use client'
+
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 
 interface StoreDetailsProps {
